@@ -3,83 +3,158 @@
 #include <algorithm>
 using namespace std;
 struct automobile{
-    string categoria;
+    string Categoria, Marca, Modello, Colore, lun, mar, mer, gio, ven, sab, dom;
     };
 int righe=0;
+automobile vet[20];
+automobile vetd[20];
+automobile appo[20];
 void contarighe(){
     string app;
     ifstream fin("auto.csv");
     if (!fin) cout<<"Errore di apertura del file";
         while (!fin.eof()){
-        getline(fin, app);
         righe++;
+        fin>>vet[righe].Categoria,',';
+        getline(fin,vet[righe].Marca,',');
+        getline(fin,vet[righe].Modello,',');
+        fin>>vet[righe].Colore,',';
+        fin>>vet[righe].lun,',';
+        fin>>vet[righe].mar,',';
+        fin>>vet[righe].mer,',';
+        fin>>vet[righe].gio,',';
+        fin>>vet[righe].ven,',';
+        fin>>vet[righe].sab,',';
+        fin>>vet[righe].dom;
         }
     fin.close();
 }
 void richiesta(automobile autom){
     contarighe();
-    int s=0, r=0, app[10], n=1, y=0;
-    string mat[righe][11];
-    string w, str[10], ap;
+    int s=0, r=0, app[10], n=1, y=0, u=0, k=0;
+    string w, ap;
     char x=',';
-    ifstream fin("auto.csv");
-    if (!fin)
-        cout<<"Errore di apertura del file";
-    while (!fin.eof()){
-        for (int r=0; r<righe; r++)
-        {
-            for (int c=0; c<11; c++)
-            {
-                getline(fin,mat[r][c],',');
-                cout<<mat[r][c]<<" ";
-            }
-            cout<<endl;
-        }
-    }
-    fin.close();
     ifstream sin("auto.csv");
     if (!sin)
         cout<<"Errore di apertura del file";
     cout<<"Inserire la categoria dell'auto : ";
-    cin>>autom.categoria;
-    while (n!=0){
-        cout<<"Inserire i giorni in cui serve l'auto \n(lun=1, mar=2, mer=3, gio=4, ven=5, sab=6, dom=7, exit=0) : ";
+    cin>>autom.Categoria;
+    do{
+        cout<<"Inserire i giorni in cui serve l'auto \n(lun=1, mar=2, mer=3, gio=4, ven=5, sab=6, dom=7, exit=8) : ";
         cin>>n;
-        app[s]=n+3;
-        s++;
-        cout<<endl;
-    }
+        n=n+3;
+        app[y]=n;
+        y++;
+    }while (n!=11);
+    cout<<"Le auto disponibili sono : "<<endl;
     while (!sin.eof()){
-            sin>>w;
-            w.erase(remove(w.begin(),w.end(),x),w.end());
-            if(w==autom.categoria){
-            getline(sin, ap);
-            str[r]= w + "," + ap;
-            r++;
-            }
-    }
-    s--;
-    for (int f=0; f<s; f++)
-    {
-        cout<<"gg: "<<mat[2][f];
-        cout<< "sono dentro";
-        for (int o=app[f]; o<app[f]; o++)
+        sin>>w;
+        w.erase(remove(w.begin(),w.end(),x),w.end());
+        if(w == autom.Categoria)
         {
+            appo[r].Categoria=w;
+            sin>>appo[r].Marca,',';
+            getline(sin,appo[r].Modello,',');
+            getline(sin,appo[r].Colore,',');
+            switch (app[s]){
+            case 4:
+                sin>>ap;
+                if (ap=="L,"){
+                    appo[s].lun=ap;
+                    u++;
+                }
+            break;
+            case 5:
+                sin>>ap;
+                sin>>ap;
+                if (ap=="L,"){
+                    appo[s].mar=ap;
+                    u++;
+                }
+            break;
+            case 6:
+               sin>>ap;
+               sin>>ap;
+               sin>>ap;
+                if (ap=="L,"){
+                    appo[s].mer=ap;
+                    u++;
+                }
+            break;
+            case 7:
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                if (ap=="L,"){
+                    appo[s].gio=ap;
+                    u++;
+                }
+            break;
+            case 8:
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                if (ap=="L,"){
+                    appo[s].ven=ap;
+                    u++;
+                }
+            break;
+            case 9:
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                if (ap=="L,"){
+                    appo[s].sab=ap;
+                    u++;
+                }
+            break;
+            case 10:
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                sin>>ap;
+                if (ap=="L"){
+                    appo[s].dom=ap;
+                    u++;
+                }
+            break;
 
-
-        if (mat[2][o]=="A")
-            str[o]=str[o+1];
-        else
-            if (mat[2][o]=="L"){
-                y++;
+            s++;
             }
+            if (u==y-1)
+            {
+                vetd[r].Categoria=appo[s].Categoria;
+                vetd[r].Marca=appo[s].Marca;
+                vetd[r].Modello=appo[s].Modello;
+                vetd[r].Colore=appo[s].Colore;
+                vetd[r].lun=appo[s].lun;
+                vetd[r].mar=appo[s].mar;
+                vetd[r].mer=appo[s].mer;
+                vetd[r].gio=appo[s].gio;
+                vetd[r].ven=appo[s].ven;
+                vetd[r].sab=appo[s].sab;
+                vetd[r].dom=appo[s].dom;
+                cout<<k+1<<"-";
+                cout<<appo[r].Categoria<<", ";
+                cout<<appo[r].Marca<<" ";
+                cout<<appo[r].Modello<<", ";
+                cout<<appo[r].Colore<<" ";
+                cout<<endl;
+                y++;
+                k++;
+            }
+            r++;
         }
     }
-    cout<<"s="<<s;
-    cout<<"y="<<y;
-    if (y==s)
-    cout<<"L'auto "<<str[0]<<" e' stata prenotata";
-
     sin.close();
     cout<<endl;
 }
