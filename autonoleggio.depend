@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1674244338 source:c:\users\peppe\documents\github\auto_noleggio\main.cpp
+	<iostream>
+	<fstream>
+	<algorithm>
+
