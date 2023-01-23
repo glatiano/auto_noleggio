@@ -7,30 +7,89 @@ struct automobile{
     };
 int righe=0;
 automobile vet[20];
-automobile vetd[20];
 automobile appo[20];
-void contarighe(){
+void riempivet(){
     string app;
     ifstream fin("auto.csv");
     if (!fin) cout<<"Errore di apertura del file";
         while (!fin.eof()){
-        fin>>vet[righe].Categoria,',';
+        getline(fin,vet[righe].Categoria,',');
+        cout<<vet[righe].Categoria;
         getline(fin,vet[righe].Marca,',');
+        cout<<vet[righe].Marca;
         getline(fin,vet[righe].Modello,',');
-        fin>>vet[righe].Colore,',';
-        fin>>vet[righe].lun,',';
-        fin>>vet[righe].mar,',';
-        fin>>vet[righe].mer,',';
-        fin>>vet[righe].gio,',';
-        fin>>vet[righe].ven,',';
-        fin>>vet[righe].sab,',';
-        fin>>vet[righe].dom;
+        cout<<vet[righe].Modello;
+        getline(fin,vet[righe].Colore,',');
+        cout<<vet[righe].Colore;
+        getline(fin,vet[righe].lun,',');
+        cout<<vet[righe].lun;
+        getline(fin,vet[righe].mar,',');
+        cout<<vet[righe].mar;
+        getline(fin,vet[righe].mer,',');
+        cout<<vet[righe].mer;
+        getline(fin,vet[righe].gio,',');
+        cout<<vet[righe].gio;
+        getline(fin,vet[righe].ven,',');
+        cout<<vet[righe].ven;
+        getline(fin,vet[righe].sab,',');
+        cout<<vet[righe].sab;
+        getline(fin,vet[righe].dom);
+        cout<<vet[righe].dom<<endl;
         righe++;
         }
     fin.close();
 }
+void scrivifile(int y){
+    for (int i=0; i<righe; i++)
+        {
+            cout<<vet[i].Marca<<endl;
+            cout<<appo[y-1].Marca<<endl;
+            if (vet[i].Marca==appo[y-1].Marca)
+            {
+                vet[i].Categoria=appo[y-1].Categoria;
+                vet[i].Marca=appo[y-1].Marca;
+                vet[i].Modello=appo[y-1].Modello;
+                vet[i].Colore=appo[y-1].Colore;
+                vet[i].lun=appo[y-1].lun;
+                vet[i].mar=appo[y-1].mar;
+                vet[i].mer=appo[y-1].mer;
+                vet[i].gio=appo[y-1].gio;
+                vet[i].ven=appo[y-1].ven;
+                vet[i].sab=appo[y-1].sab;
+                vet[i].dom=appo[y-1].dom;
+            }
+        }
+        ofstream fout("auto.csv");
+        for (int i=0; i<righe; i++)
+        {
+            fout<<vet[i].Categoria;
+            cout<<vet[i].Categoria;
+            fout<<vet[i].Marca;
+            cout<<vet[i].Marca;
+            fout<<vet[i].Modello;
+            cout<<vet[i].Modello;
+            fout<<vet[i].Colore;
+            cout<<vet[i].Colore;
+            fout<<vet[i].lun;
+            cout<<vet[i].lun;
+            fout<<vet[i].mar;
+            cout<<vet[i].mar;
+            fout<<vet[i].mer;
+            cout<<vet[i].mer;
+            fout<<vet[i].gio;
+            cout<<vet[i].gio;
+            fout<<vet[i].ven;
+            cout<<vet[i].ven;
+            fout<<vet[i].sab;
+            cout<<vet[i].sab;
+            fout<<vet[i].dom;
+            cout<<vet[i].dom<<endl;
+            fout<<endl;
+        }
+    fout.close();
+}
 void richiesta(automobile autom){
-    contarighe();
+    riempivet();
     int s=0, r=0, app[10], n=1, y=0, u=0, k=0;
     string w, ap;
     char x=',';
@@ -87,81 +146,78 @@ void richiesta(automobile autom){
     cout<<appo[y-1].sab<<",";
     cout<<appo[y-1].dom<<endl;
     do{
-        cout<<"Inserire i giorni in cui serve l'auto \n(lun=1, mar=2, mer=3, gio=4, ven=5, sab=6, dom=7, exit=8) : ";
+        cout<<"Inserire i giorni in cui prenotare l'auto \n(lun=1, mar=2, mer=3, gio=4, ven=5, sab=6, dom=7, exit=8) : ";
         cin>>n;
         n=n+3;
         app[s]=n;
         s++;
     }while (n!=11);
-    for (int g=0; g<s; g++)
+    for (int g=0; g<s-1; g++)
     {
-        switch (app[u]){
+        switch (app[g]){
         case 4:
-            if (appo[u].lun==" L"){
-                appo[u].lun=" A";
+            if (appo[y-1].lun==" L"){
+                appo[y-1].lun=" A";
                 u++;
             }
             else
-                if(appo[u].lun==" A")
+                if(appo[y-1].lun==" A")
                     k++;
                 u++;
         break;
         case 5:
-            if (appo[u].mar==" L"){
-                appo[u].mar=" A";
+            if (appo[y-1].mar==" L" || appo[y-1].mar==" L,"){
+                appo[y-1].mar=" A";
                 u++;
             }
             else
-                if(appo[u].mar==" A")
+                if(appo[y-1].mar==" A")
                     k++;
 
         break;
         case 6:
-            cout<<"appo="<<appo[u].mer<<endl;
-            if (appo[u].mer==" L"){
-                appo[u].mer=" A";
-                cout<<"cambiamento effettuato"<<endl;
-                cout<<"appo="<<appo[u].mer<<endl;
+            if (appo[y-1].mer==" L"){
+                appo[y-1].mer=" A";
                 u++;
             }
             else
-                if(appo[u].mer==" A")
+                if(appo[y-1].mer==" A")
                     k++;
         break;
         case 7:
-            if (appo[u].gio==" L"){
-                appo[u].gio=" A";
+            if (appo[y-1].gio==" L"){
+                appo[y-1].gio=" A";
                 u++;
             }
             else
-                if(appo[u].gio==" A")
+                if(appo[y-1].gio==" A")
                     k++;
         break;
         case 8:
-            if (appo[u].ven==" L"){
-                appo[u].ven=" A";
+            if (appo[y-1].ven==" L"){
+                appo[y-1].ven=" A";
                 u++;
             }
             else
-                if(appo[u].ven==" A")
+                if(appo[y-1].ven==" A")
                     k++;
         break;
         case 9:
-            if (appo[u].sab==" L"){
-                appo[u].sab=" A";
+            if (appo[y-1].sab==" L"){
+                appo[y-1].sab=" A";
                 u++;
             }
             else
-                if(appo[u].sab==" A")
+                if(appo[y-1].sab==" A")
                     k++;
         break;
         case 10:
-            if (appo[u].dom==" L"){
-                appo[u].dom=" A";
+            if (appo[y-1].dom==" L"){
+                appo[y-1].dom=" A";
                 u++;
             }
             else
-                if(appo[u].dom==" A")
+                if(appo[y-1].dom==" A")
                     k++;
         break;
         }
@@ -171,39 +227,10 @@ void richiesta(automobile autom){
     if (!fin)
         cout<<"Errore di apertura del file";
     if (k!=0)
-        cout<<"Auto non disponibile nei giorni selezionati!";
-    else
-    {
+        cout<<"Auto non disponibile nei giorni selezionati!"<<endl;
+    else{
         cout<<"Auto prenotata!"<<endl;
-        while (!fin.eof()){
-        fin>>w;
-        w.erase(remove(w.begin(),w.end(),x),w.end());
-        //cout<<"W="<<w<<endl;
-        //cout<<"APPO CAT="<<appo[y-1].Categoria<<endl;
-            if(w == appo[y-1].Categoria)
-            {
-                fin>>w;
-                w.erase(remove(w.begin(),w.end(),x),w.end());
-                //cout<<"W2="<<w<<endl;
-                //cout<<"APPO MARCA="<<appo[y-1].Marca<<endl;
-                if(appo[y-1].Marca == " FIAT")
-                {
-                cout<<"vediamo";
-                cout<<appo[y-1].Modello<<",";
-                cout<<appo[y-1].Colore<<",";
-                cout<<appo[y-1].lun<<",";
-                cout<<appo[y-1].mar<<",";
-                cout<<appo[y-1].mer<<",";
-                cout<<appo[y-1].gio<<",";
-                cout<<appo[y-1].ven<<",";
-                cout<<appo[y-1].sab<<",";
-                cout<<appo[y-1].dom;
-                r++;
-                cout<<endl;
-                }
-            }
-        }
-    cout<<endl;
+        scrivifile(y);
     }
     fin.close();
 }
@@ -225,4 +252,3 @@ int main()
         }
     }while(s!=2);
 }
-
