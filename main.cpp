@@ -11,6 +11,7 @@ automobile appo[20];
 void riempivet(){
     string app;
     ifstream fin("auto.csv");
+    righe=0;
     if (!fin) cout<<"Errore di apertura del file";
         cout<<"---------------------------AUTONOLEGGIO----------------------------"<<endl;
         while (!fin.eof()){
@@ -114,7 +115,6 @@ void scrivifile(int y){
     fout.close();
 }
 void richiesta(automobile autom){
-    riempivet();
     int s=0, r=0, app[7], n=1, y=0, u=0, k=0;
     string w, ap;
     char x=',';
@@ -182,27 +182,22 @@ void richiesta(automobile autom){
         case 1:
             if (appo[y-1].lun==" L"){
                 appo[y-1].lun=" A";
-                u++;
             }
             else
                 if(appo[y-1].lun==" A")
                     k++;
-                u++;
         break;
         case 2:
             if (appo[y-1].mar==" L" || appo[y-1].mar==" L,"){
                 appo[y-1].mar=" A";
-                u++;
             }
             else
                 if(appo[y-1].mar==" A")
                     k++;
-
         break;
         case 3:
             if (appo[y-1].mer==" L"){
                 appo[y-1].mer=" A";
-                u++;
             }
             else
                 if(appo[y-1].mer==" A")
@@ -211,7 +206,6 @@ void richiesta(automobile autom){
         case 4:
             if (appo[y-1].gio==" L"){
                 appo[y-1].gio=" A";
-                u++;
             }
             else
                 if(appo[y-1].gio==" A")
@@ -220,7 +214,6 @@ void richiesta(automobile autom){
         case 5:
             if (appo[y-1].ven==" L"){
                 appo[y-1].ven=" A";
-                u++;
             }
             else
                 if(appo[y-1].ven==" A")
@@ -229,7 +222,6 @@ void richiesta(automobile autom){
         case 6:
             if (appo[y-1].sab==" L"){
                 appo[y-1].sab=" A";
-                u++;
             }
             else
                 if(appo[y-1].sab==" A")
@@ -238,7 +230,6 @@ void richiesta(automobile autom){
         case 7:
             if (appo[y-1].dom==" L"){
                 appo[y-1].dom=" A";
-                u++;
             }
             else
                 if(appo[y-1].dom==" A")
@@ -264,15 +255,19 @@ int main()
     int s;
     do{
         cout<<"------- MENU -------"<<endl;
-        cout<<"1 - Richiesta automobile"<<endl;
-        cout<<"2 - Uscita";
+        cout<<"1 - Visualizza autonoleggio"<<endl;
+        cout<<"2 - Richiesta automobile"<<endl;
+        cout<<"3 - Uscita";
         cout<<endl<<"Inserire il numero equivalente all' operazione da eseguire : ";
         cin>>s;
         switch(s)
         {
             case 1:
+                riempivet();
+            break;
+            case 2:
                 richiesta(autom);
             break;
         }
-    }while(s!=2);
+    }while(s!=3);
 }
